@@ -25,4 +25,35 @@
       no more ~~
     </p>
   </ng-template>
+
+  <button [ngClass]="buttonClass" (click)="loadMore2()">button 3</button>
+
+  <div [ngSwitch]="userLevel">
+    <h3 *ngSwitchCase="'normal'">normal user</h3>
+    <h3 *ngSwitchCase="'vip'">vip user</h3>
+    <h3 *ngSwitchCase="'blackGold'">black gold user</h3>
+    <h3 *ngSwitchDefault>please log in</h3>
+  </div>
+  <input [(ngModel)]="lover" (ngModelChange)="handleViewChange()" placeholder="please enter something">
+  <hr>
+
+  <input [(ngModel)]="password" type="password" (ngModelChange)="pwdChange()">
+  <span>{{ msg }}</span>
+
+  <div appliuChen>Lorem ipsum dolor sit amet, consectetur adipisicing
+    elit. Ab adipisci assumenda dolor, ducimus ea, ex illo impedit inventore iure laborum,
+    nihil nisi placeat ratione reprehenderit sed similique soluta! Modi, repellendus.
+  </div>
+  <div >Lorem ipsum dolor sit amet, consectetur adipisicing
+    elit. Ab adipisci assumenda dolor, ducimus ea, ex illo impedit inventore iure laborum,
+    nihil nisi placeat ratione reprehenderit sed similique soluta! Modi, repellendus.
+  </div>
+  <div appliuChen>Lorem ipsum dolor sit amet, consectetur adipisicing
+    elit. Ab adipisci assumenda dolor, ducimus ea, ex illo impedit inventore iure laborum,
+    nihil nisi placeat ratione reprehenderit sed similique soluta! Modi, repellendus.
+  </div>
+
+  <ul>
+    <li *ngFor="let item   of list">{{item.name}} - {{item.gender}} - {{item.gender | sexPipe : "en"}}</li>
+  </ul>
 </div>
