@@ -4,6 +4,8 @@ import {CommonModule, NgClass, NgForOf, NgIf, NgStyle, NgSwitch, NgSwitchCase, N
 import {FormsModule} from "@angular/forms";
 import {LiuchenDirective} from "./liuchen.directive";
 import {SexPipe} from "./sex.pipe";
+import {LogService} from "./log.service";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 type Person = {
   name: string,
@@ -27,10 +29,18 @@ type buttonClass = {
   'btn-success': boolean,
 }
 
+type Fact = {
+  id:string,
+  type: string,
+  attributes:{
+    body: string,
+  },
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgForOf, NgIf, NgStyle, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault, FormsModule, LiuchenDirective, SexPipe],
+  imports: [RouterOutlet, NgForOf, NgIf, NgStyle, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault, FormsModule, LiuchenDirective, SexPipe, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -70,6 +80,8 @@ export class AppComponent {
     'btn-success': true,
   };
 
+  funFact:Fact[] = [];
+
   userLevel: string = "asdd";
 
   lover:string = "Lisa Guillard";
@@ -77,6 +89,14 @@ export class AppComponent {
   password:string = "";
 
   msg:string = "please enter password";
+
+  log?:LogService;
+  http?: HttpClient;
+
+  constructor(log:LogService, http: HttpClient) {
+    this.log = log;
+    this.http = http;
+  }
 
   //functions
   increment(): void {
@@ -113,5 +133,22 @@ export class AppComponent {
     else{
       this.msg = "perfect";
     }
+  }
+
+  addItem():void{
+    this.log?.doAction("adding");
+  }
+
+  deleteItem():void{
+    this.log?.doAction("deleting");
+  }
+
+  getFunFact():void{
+    const url:string = "https://dogapi.dog/api/v2/facts";
+    this.http?.get(url).subscribe((res)=>{
+      // @ts-ignore
+      this.funFact = res.data;
+    });
+    console.log(this.funFact[0]?.attributes.body);
   }
 }

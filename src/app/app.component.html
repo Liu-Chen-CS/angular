@@ -54,6 +54,15 @@
   </div>
 
   <ul>
-    <li *ngFor="let item   of list">{{item.name}} - {{item.gender}} - {{item.gender | sexPipe : "en"}}</li>
+    <li *ngFor="let item of list">{{item.name}} - {{item.gender}} - {{item.gender | sexPipe : "en"}}</li>
   </ul>
+
+  <div>
+    <button (click)="addItem()">add item</button>
+    <button (click)="deleteItem()">delete item</button>
+  </div>
+
+  <div>
+    <button (click)="getFunFact()">fetch fun fact</button>
+  </div>
 </div>
