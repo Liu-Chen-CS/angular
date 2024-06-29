@@ -65,4 +65,9 @@
   <div>
     <button (click)="getFunFact()">fetch fun fact</button>
   </div>
+
+  <div>App: {{price}}</div>
+
+  <MyHome [homePrice] = "price"></MyHome>
+  <About (cryEvent)="doCry($event)"></About>
 </div>

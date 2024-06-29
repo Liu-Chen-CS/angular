@@ -6,6 +6,8 @@ import {LiuchenDirective} from "./liuchen.directive";
 import {SexPipe} from "./sex.pipe";
 import {LogService} from "./log.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {MyHome} from "./home/myHome.component";
+import {About} from "./about/about.component";
 
 type Person = {
   name: string,
@@ -30,9 +32,9 @@ type buttonClass = {
 }
 
 type Fact = {
-  id:string,
+  id: string,
   type: string,
-  attributes:{
+  attributes: {
     body: string,
   },
 }
@@ -40,7 +42,11 @@ type Fact = {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgForOf, NgIf, NgStyle, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault, FormsModule, LiuchenDirective, SexPipe, HttpClientModule],
+  imports: [RouterOutlet, NgForOf, NgIf, NgStyle, NgClass,
+    NgSwitch, NgSwitchCase, NgSwitchDefault, FormsModule,
+    LiuchenDirective, SexPipe, HttpClientModule,
+    MyHome, About,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -80,20 +86,22 @@ export class AppComponent {
     'btn-success': true,
   };
 
-  funFact:Fact[] = [];
+  funFact: Fact[] = [];
 
   userLevel: string = "asdd";
 
-  lover:string = "Lisa Guillard";
+  lover: string = "Lisa Guillard";
 
-  password:string = "";
+  password: string = "";
 
-  msg:string = "please enter password";
+  msg: string = "please enter password";
 
-  log?:LogService;
+  log?: LogService;
   http?: HttpClient;
 
-  constructor(log:LogService, http: HttpClient) {
+  price:number = 199.89;
+
+  constructor(log: LogService, http: HttpClient) {
     this.log = log;
     this.http = http;
   }
@@ -111,7 +119,7 @@ export class AppComponent {
     this.hasMore = false;
   }
 
-  loadMore2():void{
+  loadMore2(): void {
     this.buttonClass = {
       btn: true,
       'btn-danger': true,
@@ -119,36 +127,38 @@ export class AppComponent {
     }
   }
 
-  handleViewChange():void{
+  handleViewChange(): void {
     console.log(this.lover);
   }
 
-  pwdChange():void{
-    if(this.password.length < 6){
+  pwdChange(): void {
+    if (this.password.length < 6) {
       this.msg = "password length less than 6";
-    }
-    else if(this.password.length > 12){
+    } else if (this.password.length > 12) {
       this.msg = "password length greater than 12";
-    }
-    else{
+    } else {
       this.msg = "perfect";
     }
   }
 
-  addItem():void{
+  addItem(): void {
     this.log?.doAction("adding");
   }
 
-  deleteItem():void{
+  deleteItem(): void {
     this.log?.doAction("deleting");
   }
 
-  getFunFact():void{
-    const url:string = "https://dogapi.dog/api/v2/facts";
-    this.http?.get(url).subscribe((res)=>{
+  getFunFact(): void {
+    const url: string = "https://dogapi.dog/api/v2/facts";
+    this.http?.get(url).subscribe((res) => {
       // @ts-ignore
       this.funFact = res.data;
     });
     console.log(this.funFact[0]?.attributes.body);
+  }
+
+  doCry(e:string){
+    this.name = e;
   }
 }
