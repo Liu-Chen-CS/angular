@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
+import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {CommonModule, NgClass, NgForOf, NgIf, NgStyle, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {LiuchenDirective} from "./liuchen.directive";
@@ -45,7 +45,7 @@ type Fact = {
   imports: [RouterOutlet, NgForOf, NgIf, NgStyle, NgClass,
     NgSwitch, NgSwitchCase, NgSwitchDefault, FormsModule,
     LiuchenDirective, SexPipe, HttpClientModule,
-    MyHome, About,
+    MyHome, About, RouterLink,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -101,9 +101,12 @@ export class AppComponent {
 
   price:number = 199.89;
 
-  constructor(log: LogService, http: HttpClient) {
+  router?:Router;
+
+  constructor(log: LogService, http: HttpClient, router:Router) {
     this.log = log;
     this.http = http;
+    this.router = router;
   }
 
   //functions
@@ -160,5 +163,9 @@ export class AppComponent {
 
   doCry(e:string){
     this.name = e;
+  }
+
+  jump(name:string, age:number) {
+    this.router?.navigateByUrl(`/about?name=${name}&age=${age}`);
   }
 }

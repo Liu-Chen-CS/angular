@@ -70,4 +70,15 @@
 
   <MyHome [homePrice] = "price"></MyHome>
   <About (cryEvent)="doCry($event)"></About>
+
+  <nav>
+    <ul>
+      <h3>Home</h3><hr>
+      <li><a routerLink="/home">Home</a></li>
+      <li><a routerLink="/about">about</a></li>
+      <li><a routerLink="/about" [queryParams]="{name:'liuchen', age:28}">about</a></li>
+    </ul>
+  </nav>
+  <button (click)="jump('lisaguillard', 18)">navigate to about</button>
+  <router-outlet></router-outlet>
 </div>
